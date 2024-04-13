@@ -9,7 +9,7 @@ app_name = 'core'
 urlpatterns = [
     path('', views.index,name='index'),
     path('contact/',views.contact,name='contact'),
-    path('singup/',views.singup,name='singup'),
+    path('singup/',auth_views.LoginView.as_view(template_name='core/singup.html', authentication_form=LoginForm),name='singup'),
     path('logout/', views.logout_user ,name = "logout"),
     path('login/',auth_views.LoginView.as_view(template_name='core/login.html', authentication_form=LoginForm),name='login')
 ]

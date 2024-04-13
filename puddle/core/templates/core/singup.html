@@ -15,18 +15,19 @@
         </div>
 
         <div class="mb-3">
-            <label class="inline-block mb-2">email</label><br>
+            <label class="inline-block mb-2">email</label>
             {{ form.email }}
+            <br>
         </div>
 
         <div class="mb-3">
             <label class="inline-block mb-2">Password</label><br>
-            {{ form.password1 }}
+            {{ form.pass1 }}
         </div>
 
         <div class="mb-3">
             <label class="inline-block mb-2">Repeat password</label><br>
-            {{ form.password2 }}
+            {{ form.pass2 }}
         </div>
 
         {% if form.errors or form.non_form_errors %}
