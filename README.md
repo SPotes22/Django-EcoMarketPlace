@@ -33,3 +33,35 @@ thanks a lot to freeCodeCamp to provide such as usefull and dynamic way to learn
 
 	- INTEGRADO A UNA API
 	- CONVERTIDO EN TEMPLATE EXPORTABLE
+
+# USO
+
+- Crear un venv 
+`
+python3 -m venv env
+`
+- instalar librerias
+`
+pip install -r requirements.txt
+`
+- Conectar BD desde puddle/settings.py
+- Crear Usuario y bd del Proyecto
+- Preparar Migraciones de los modelos
+`
+python3 manage.py makemigrations
+`
+- migrar a la bd 
+`
+python3 manage.py migrate
+`
+- crear  admin (opcional)
+- activar admin (obligatorio desde db field core_customuser.'is_active' == 1)
+- crear usuario 
+- activar usuario desde la bd (core_customuser.'is_active'==1)
+- ejecutar en DEBUG
+`
+python3 manage.py runserver
+`
+- Empezar a editar 
+
+
