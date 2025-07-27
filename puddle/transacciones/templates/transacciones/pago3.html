@@ -1,0 +1,190 @@
+﻿{% extends 'core/base.html' %}
+
+
+{% block title %}Procesar Pago{% endblock %}
+
+
+{% block content %}
+
+<div class="w-full md:w-2/3 lg:w-1/2 my-8 mx-auto p-6 bg-white rounded-xl shadow-md">
+
+    <h2 class="text-2xl font-semibold text-center mb-6">Formulario de Pago</h2>
+
+
+    <form method="post" novalidate>
+
+        {% csrf_token %}
+
+        
+<!-- Fila de los 4 campos PAN -->
+
+        <div class="mb-4">
+
+            <label class="block font-medium mb-1">Número de tarjeta</label>
+
+        	<div class="grid grid-cols-4 gap-2">
+
+                {{ form.PAN_1 }}
+                {{ form.PAN_2 }}
+                {{ form.PAN_3 }}
+                {{ form.PAN_4 }}
+            
+		</div>
+            
+	{% if form.PAN_1.errors or form.PAN_2.errors or form.PAN_3.errors or form.PAN_4.errors %}
+
+                <p class="text-red-500 text-sm mt-1">Número de tarjeta inválido.</p>
+            	{% endif %}
+     
+	</div>
+
+ 
+       <!-- Código ER (CVV) -->
+
+        <div class="mb-4">
+
+            <label class="block font-medium mb-1">Código de seguridad (CVV/ER)</label>
+
+            {{ form.CVS }}
+            
+{% if form.ER.errors %}
+                
+<p class="text-red-500 text-sm mt-1">{{ form.ER.errors|striptags }}</p>
+
+            {% endif %}
+        
+</div>
+
+        
+<!-- Fecha y año -->
+
+        <div class="grid grid-cols-2 gap-4 mb-6">
+
+            <div>
+
+<!-- Fecha y año -->
+
+<div class="grid grid-cols-2 gap-4 mb-6">
+
+    <div>
+        <label class="block font-medium mb-1">Mes</label>
+        
+{{ form.EXP_M }}
+        
+{% if form.EXP_M.errors %}
+
+            <p class="text-red-500 text-sm mt-1">{{ form.EXP_M.errors|striptags }}</p>
+
+        {% endif %}
+    </div>
+
+    	<div>
+        
+		<label class="block font-medium mb-1">Año</label>
+
+        	{{ form.EXP_Y }}
+        
+		{% if form.EXP_Y.errors %}
+            
+		<p class="text-red-500 text-sm mt-1">{{ form.EXP_Y.errors|striptags }}</p>
+
+	        {% endif %}
+    
+	</div>
+
+</div>
+
+</div>
+    
+</div>
+<div class="text-center">
+
+            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-xl transition">
+Procesar Pago
+</button>
+        
+</div>
+    
+</form>
+
+</div>
+
+
+
+<div class="w-full md:w-2/3 lg:w-1/2 my-8 mx-auto p-6 bg-white rounded-xl shadow-md space-y-4">
+  <!-- Campos Seguros -->
+
+
+<div>
+    
+<label class="block text-sm font-medium text-gray-700 mb-1">Titular</label>
+
+    {{ form.titular }}
+  
+</div>
+
+  
+<div>
+    
+<label class="block text-sm font-medium text-gray-700 mb-1">Últimos 4 dígitos</label>
+
+    {{ form.ultimos_4_digitos }}
+  
+</div>
+
+  
+<div>
+    
+<label class="block text-sm font-medium text-gray-700 mb-1">Marca de la Tarjeta</label>
+
+    {{ form.marca_tarjeta }}
+  </div>
+
+ 
+ <div>
+    
+<label class="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
+
+    {{ form.direccion }}
+  
+</div>
+
+  
+<div>
+    <label class="block text-sm font-medium text-gray-700 mb-1">Ciudad</label>
+
+    {{ form.ciudad }}
+  
+</div>
+
+
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-1">Departamento</label>
+
+    {{ form.departamento }}
+  </div>
+
+  
+<div>
+    
+<label class="block text-sm font-medium text-gray-700 mb-1">Código Postal</label>
+
+    {{ form.codigo_postal }}
+  
+</div>
+
+  
+{% if form.titular.errors or form.ultimos_4_digitos.errors or form.marca_tarjeta.errors or 
+        form.direccion.errors or form.ciudad.errors or form.departamento.errors or 
+        form.codigo_postal.errors %}
+
+    <p class="text-red-500 text-sm mt-1">
+
+      {{ form.titular.errors|striptags }} | Tienes un campo inválido
+    </p>
+
+  {% endif %}
+
+</div>
+
+{% endblock %}

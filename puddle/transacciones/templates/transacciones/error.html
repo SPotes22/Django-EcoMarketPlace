@@ -1,0 +1,19 @@
+﻿{% extends 'core/base.html' %}
+
+
+{% block title %} Error en el Pago {{ title }} {% endblock %}
+{% block content %}
+
+<div>
+    <h1 style="color: red;">❌ Error al procesar el pago</h1>
+    <p>Lo sentimos, no pudimos completar tu transacción.</p>
+    
+    {% if mensaje_error %}
+        <p><strong>Detalle:</strong> {{ mensaje_error }}</p>
+    {% endif %}
+
+    
+</div>
+
+
+{% endblock %}

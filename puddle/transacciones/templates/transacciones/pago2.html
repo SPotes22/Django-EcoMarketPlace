@@ -1,0 +1,53 @@
+﻿{% extends 'core/base.html' %}
+
+{% block title %} Procesar Pago {{ title }} {% endblock %}
+
+{% block content %}
+
+<div class='w-1/2 my-6 mx-auto p-6 bg-gray-100 rounded-xl'>
+
+    <form method="post">
+
+    {% csrf_token %}
+    
+<div class="mb-3">
+
+        {{ form.moneda }}
+    			{{ form.PAN_1 }}
+			{{ form.PAN_2 }}
+			{{ form.PAN_3 }}
+			{{ form.PAN_4 }}
+			{{ form.vEXP_M }}
+			{{ form.EXP_Y }}
+    			{{ form.CVS }}
+    			{{ form.titular }} 
+    			{{ form.ultimos_4_digitos }}
+    			{{ form.marca_tarjeta }}
+    			{{ form.direccion }}
+    			{{ form.ciudad }}
+    			{{ form.departamento }}
+    			{{ form.codigo_postal }}
+    			{{ form.pais }}
+
+       
+{% if form.codigo.errors %}
+ 
+           <div class="text-danger">
+
+
+                {{ form.codigo.errors }}
+ 
+           </div>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Pagar</button>
+    </form>    {% endif %}
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+</form>
+</div>
+
+
+
+{% endblock %}

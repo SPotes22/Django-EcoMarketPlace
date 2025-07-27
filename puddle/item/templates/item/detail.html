@@ -25,8 +25,11 @@
                     <a href="{% url 'item:delete' item.id %}" class="inline-block mt-6 px-6 py-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl hover:bg-red-700">Delete</a>
                 </div>
             {% else %}
-                <a href="{% url 'conversation:new' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white  rounded-xl hover:bg-teal-700">Contact Seller</a>
-            {% endif %}
+                <a href="{% url 'procesar_transaccion' %}?item_id={{ item.id }}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white  rounded-xl hover:bg-teal-700">
+    Comprar ahora
+</a><br>      
+<a href="{% url 'conversation:new' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white  rounded-xl hover:bg-teal-700">Contact Seller</a>
+      {% endif %}
         </div>
     </div>
     <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
@@ -48,5 +51,9 @@
             {% endfor %}
         </div>
     </div>
+
+
+
+
 
 {% endblock %}

@@ -1,0 +1,32 @@
+﻿{% extends 'core/base.html' %}
+
+{% block title %} 
+{{ title }} 
+{% endblock %}
+
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    
+<meta charset="UTF-8">
+
+    <title>Pago Exitoso</title>
+
+</head>
+
+<body>
+    
+<h1>✅ ¡Pago realizado con éxito!</h1>
+
+    	<p>Gracias por tu compra, {{ nombre_titular }}.</p>
+    
+	<p>Tu transacción fue registrada el {{ fecha }}.</p>
+
+</body>
+
+</html>
+
+{% endblock %}

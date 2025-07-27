@@ -1,0 +1,38 @@
+<!-- templates/transacciones/pago.html -->
+
+<!DOCTYPE html>
+	
+<html lang="es">
+
+<head>
+    
+	<meta charset="UTF-8">
+    
+	<title>Procesar Pago</title>
+</head>
+
+<body>
+    
+	<h1>Formulario de Pago</h1>
+
+	
+    {% if form.errors %}
+        
+	<p style="color:red;">Por favor corrige los errores del formulario.</p>
+
+	    {% endif %}
+
+    
+	<form method="post">
+
+        {% csrf_token %}
+        
+	{{ form.as_p }}
+        
+	<button type="submit">Pagar</button>
+
+    </form>
+
+</body>
+
+</html>

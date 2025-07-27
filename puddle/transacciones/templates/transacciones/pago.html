@@ -1,0 +1,120 @@
+﻿{% extends 'core/base.html' %}
+
+{% block title %}Procesar Pago{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto my-8 px-4 flex flex-col md:flex-row gap-8">
+
+  <!-- Columna Izquierda: Formulario -->
+  <div class="w-full md:w-2/3 bg-white p-6 rounded-xl shadow-md space-y-6">
+
+    <h2 class="text-2xl font-semibold text-center mb-6">Formulario de Pago</h2>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      
+<input type="hidden" name="monto" value="{{ items_comprados.0.id }}">
+<!-- Número de tarjeta -->
+      <div>
+        <label class="block font-medium mb-1">Número de tarjeta</label>
+        <div class="grid grid-cols-4 gap-2">
+          {{ form.PAN_1 }}
+          {{ form.PAN_2 }}
+          {{ form.PAN_3 }}
+          {{ form.PAN_4 }}
+        </div>
+        {% if form.PAN_1.errors or form.PAN_2.errors or form.PAN_3.errors or form.PAN_4.errors %}
+          <p class="text-red-500 text-sm mt-1">Número de tarjeta inválido.</p>
+        {% endif %}
+      </div>
+
+      <!-- CVV -->
+      <div>
+        <label class="block font-medium mb-1">Código de seguridad (CVV)</label>
+        {{ form.CVS }}
+        {% if form.CVS.errors %}
+          <p class="text-red-500 text-sm mt-1">{{ form.CVS.errors|striptags }}</p>
+        {% endif %}
+      </div>
+
+      <!-- Fecha de expiración -->
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block font-medium mb-1">Mes</label>
+          {{ form.EXP_M }}
+          {% if form.EXP_M.errors %}
+            <p class="text-red-500 text-sm mt-1">{{ form.EXP_M.errors|striptags }}</p>
+          {% endif %}
+        </div>
+        <div>
+          <label class="block font-medium mb-1">Año</label>
+          {{ form.EXP_Y }}
+          {% if form.EXP_Y.errors %}
+            <p class="text-red-500 text-sm mt-1">{{ form.EXP_Y.errors|striptags }}</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Campos seguros -->
+      <div class="grid grid-cols-1 gap-4">
+        <div>
+          <label class="block font-medium">Titular</label>
+          {{ form.titular }}
+        </div>
+        <div>
+          <label class="block font-medium">Últimos 4 dígitos</label>
+          {{ form.ultimos_4_digitos }}
+        </div>
+        <div>
+          <label class="block font-medium">Marca de la Tarjeta</label>
+          {{ form.marca_tarjeta }}
+        </div>
+        <div>
+          <label class="block font-medium">Dirección</label>
+          {{ form.direccion }}
+        </div>
+        <div>
+          <label class="block font-medium">Ciudad</label>
+          {{ form.ciudad }}
+        </div>
+        <div>
+          <label class="block font-medium">Departamento</label>
+          {{ form.departamento }}
+        </div>
+        <div>
+          <label class="block font-medium">Código Postal</label>
+          {{ form.codigo_postal }}
+        </div>
+      </div>
+
+      <!-- Botón -->
+      <div class="text-center mt-6">
+        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-xl transition">
+          Procesar Pago
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Columna Derecha: Resumen -->
+  <div class="w-full md:w-1/3 bg-gray-100 p-6 rounded-lg shadow-md">
+    <h3 class="text-xl font-bold mb-4 text-gray-700">Resumen del producto</h3>
+    {% for item in items_comprados %}
+    <div class="mb-4 flex gap-4 items-center border-b pb-3">
+      <img src="{{ item.image.url }}" alt="Imagen de {{ item.name }}" class="w-20 h-20 object-cover rounded">
+      <div>
+        <h4 class="font-semibold text-gray-800">{{ item.name }}</h4>
+        <p class="text-sm text-gray-600">Precio: ${{ item.price }}</p>
+        <p class="text-sm text-gray-600">Cantidad: {{ item.cantidad }}</p>
+        <p class="text-sm text-gray-600">Stock disponible: {{ item.stock }}</p>
+  <p class="text-sm text-gray-800 font-bold">Subtotal: ${{ total_general }}</p>
+ <div class="mt-6 text-lg font-bold text-right">
+  Total a pagar: ${{ total_general }}
+</div>
+   </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
