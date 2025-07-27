@@ -1,10 +1,7 @@
 ## Market place project with Django
 whis prject covers the basics of Django by building a simple online marketplace where people can buy and sell items. this its an exaple on how I implemented:
-
-
-
-
-- Authentication
+----
+- Authentication 
 
 - Communication between users
 
@@ -13,8 +10,6 @@ whis prject covers the basics of Django by building a simple online marketplace 
 - Form handling and customizations
 
 - and more
-
-
 
 # Disclaimer 
 
@@ -25,11 +20,11 @@ https://twitter.com/codewithstein
 
 thanks a lot to freeCodeCamp to provide such as usefull and dynamic way to learn the current necesities on the industry.
 
-
+---
 
 # PROYECTO GREENX
 
-	- VIEW TRANSACCIONES
+	- VIEW TRANSACCIONES 
 	- REDIRECIONAMIENTO DISTINTO
 	- DB UPDATED
 	- PENTESTING
