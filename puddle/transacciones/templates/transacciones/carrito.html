@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+
+
+{% block title %}Items Comprados{% endblock %}
+
+
+{% block content %}
+
+
+
+<div class="w-full md:w-1/3 bg-gray-100 p-4 rounded-lg shadow-lg">
+  <h3 class="text-xl font-bold mb-4 text-gray-700">Resumen del producto</h3>
+
+  {% for item in items_comprados %}
+  <div class="mb-4 flex gap-4 items-center border-b pb-3">
+    <img src="{{ item.imagen.url }}" alt="Imagen de {{ item.nombre }}" class="w-20 h-20 object-cover rounded">
+    <div>
+      <h4 class="font-semibold text-gray-800">{{ item.nombre }}</h4>
+      <p class="text-sm text-gray-600">Precio: ${{ item.precio }}</p>
+      <p class="text-sm text-gray-600">Cantidad: {{ item.cantidad }}</p>
+      <p class="text-sm text-gray-600">Stock disponible: {{ item.stock }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,47 +1,26 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
-from django.contrib.auth.models import User
-
-
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .models import CustomUser
 
 class LoginForm(AuthenticationForm):
-    class Meta:
-        model = User
-        fields = ('username','password')
-
     username = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder' : 'Your username ',
-        'class' : 'w-full py-4 px-6 rounded-xl',
-    }))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder' : 'Your Password ',
-        'class' : 'w-full py-4 px-6 rounded-xl',
-    }))
-    
-class SingupForm(UserCreationForm):
-    class Meta:
-        model = User
-        fields = ('newuser','email','password1' ,'password2')
-    
-    newuser = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder' : 'Your username ',
-        'class' : 'w-full py-4 px-6 rounded-xl',
-    }))
-
-    email = forms.EmailField(required=True,widget=forms.EmailInput(attrs={
-        'placeholder': 'Your Email address',
+        'placeholder': 'Your username',
         'class': 'w-full py-4 px-6 rounded-xl',
     }))
-
-    password1 = forms.CharField(required=True,widget=forms.PasswordInput(attrs={
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder': 'Your password',
         'class': 'w-full py-4 px-6 rounded-xl',
     }))
 
-    password2 = forms.CharField(required=True,widget=forms.PasswordInput(attrs={
-        'placeholder': 'Repeat password',
+
+class CustomUserCreationForm(UserCreationForm):
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
         'class': 'w-full py-4 px-6 rounded-xl',
+        'placeholder': 'Your Email',
     }))
+    role = forms.ChoiceField(choices=CustomUser.ROLE_CHOICES)
 
-
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'role', 'password1', 'password2']
 
