@@ -21,22 +21,27 @@ class LoginForm(AuthenticationForm):
 class SingupForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ('username','email','password' ,'pass2')
-
-    username = forms.CharField(widget=forms.TextInput(attrs={
+        fields = ('newuser','email','password1' ,'password2')
+    
+    newuser = forms.CharField(widget=forms.TextInput(attrs={
         'placeholder' : 'Your username ',
         'class' : 'w-full py-4 px-6 rounded-xl',
     }))
-    email = forms.CharField(widget=forms.EmailInput(attrs={
-        'placeholder' : 'Your Email address ',
-        'class' : 'w-full py-4 px-6 rounded-xl',
+
+    email = forms.EmailField(required=True,widget=forms.EmailInput(attrs={
+        'placeholder': 'Your Email address',
+        'class': 'w-full py-4 px-6 rounded-xl',
     }))
-    pass1 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder' : 'Your Password ',
-        'class' : 'w-full py-4 px-6 rounded-xl',
+
+    password1 = forms.CharField(required=True,widget=forms.PasswordInput(attrs={
+        'placeholder': 'Your password',
+        'class': 'w-full py-4 px-6 rounded-xl',
     }))
-    pass2 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder' : 'Repeat Password ',
-        'class' : 'w-full py-4 px-6 rounded-xl',
+
+    password2 = forms.CharField(required=True,widget=forms.PasswordInput(attrs={
+        'placeholder': 'Repeat password',
+        'class': 'w-full py-4 px-6 rounded-xl',
     }))
+
+
 
