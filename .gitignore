@@ -1,2 +1,12 @@
 /env
 /env/*
+__pycache__/
+__pycache__
+env
+.env
+*.pyc
+*/*.pyc
+*.cpython-311.pyc
+*/*.cpython-311.pyc
+*/*/*.cpython-311.pyc
+~/*.cpython-311.pyc

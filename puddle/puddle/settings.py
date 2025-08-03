@@ -82,12 +82,12 @@ WSGI_APPLICATION = "puddle.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
+        "ENGINE": "django.db.backends.postgresql",
         "NAME" : 'chuzma',
         "USER" : "campista",
         "PASSWORD"  : "123456secret",
-        "HOST" : '192.168.1.103',
-        "PORT" : '3306'
+        "HOST" : '100.115.92.195',
+        "PORT" : '5432'
     }
 }
 
