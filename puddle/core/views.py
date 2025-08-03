@@ -5,6 +5,8 @@ from django.contrib.auth import logout
 from django.contrib.auth import login
 from .models import CustomUser
 from .forms import CustomUserCreationForm
+from django.contrib.auth.decorators import login_required
+
 
 def index(request):
     items = Item.objects.filter(is_sold=False)[0:6]
@@ -44,3 +46,16 @@ def logout_user(request):
     logout(request)
     messages.success(request,"You have been logged out...")
     return render(request,'dashboard/index.html')
+
+@login_required
+def about_view(request):
+    return render(request, 'core/about.html')
+
+@login_required
+def privacy_view(request):
+    return render(request, 'core/privacy.html')
+
+@login_required
+def terms_view(request):
+    return render(request, 'core/terms.html')
+

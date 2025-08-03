@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -83,9 +83,9 @@ WSGI_APPLICATION = "puddle.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME" : 'chuzma',
-        "USER" : "campista",
-        "PASSWORD"  : "123456secret",
+        "NAME" : 'transacciones',
+        "USER" : "flaskuser",
+        "PASSWORD"  : "flaskpass",
         "HOST" : '100.115.92.195',
         "PORT" : '5432'
     }
@@ -127,7 +127,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 AUTH_USER_MODEL = 'core.CustomUser'

@@ -1,7 +1,35 @@
 {% extends 'core/base.html' %}
+{% load static %} 
+{% block title %} Relacionadas {% endblock %}
 
-{%  block title %} Contact  {% endblock %}
+{% block content %}
+<div class="mb-40 text-xl px-6 py-12 bg-gray-100 rounded-xl">
 
-{%  block content %}
-<h1>The Contact page</h1>
+  <h1 class="text-center text-2xl font-bold mb-6">Publicaciones Relacionadas</h1>
+
+  <p class="mb-8 text-center max-w-3xl mx-auto">
+    Explora contenido, productos y oportunidades relacionadas con energías limpias, sostenibilidad y nuevas tecnologías. Aquí conectamos iniciativas que comparten nuestra visión de un mundo más verde y colaborativo.
+  </p>
+
+  <div class="flex flex-wrap justify-center gap-8">
+    <div class="bg-white p-4 rounded-xl shadow-md max-w-sm w-full">
+      <h3 class="text-lg font-bold mb-2">Paneles solares residenciales</h3>
+      <img src="/media/core_images/logo.jpeg" alt="Paneles solares" class="rounded w-full mb-2">
+      <p>Conoce cómo estos sistemas pueden reducir tu factura eléctrica y contribuir al medio ambiente.</p>
+    </div>
+
+    <div class="bg-white p-4 rounded-xl shadow-md max-w-sm w-full">
+      <h3 class="text-lg font-bold mb-2">Torres eólicas modulares</h3>
+      <img src="/media/core_images/torres.png" alt="Torres eólicas" class="rounded w-full mb-2">
+      <p>Diseños adaptables para zonas rurales o urbanas que buscan independencia energética.</p>
+    </div>
+
+    <div class="bg-white p-4 rounded-xl shadow-md max-w-sm w-full">
+      <h3 class="text-lg font-bold mb-2">Distribuidores confiables</h3>
+      <img src="/media/core_images/distri.png" alt="Distribuidores" class="rounded w-full mb-2">
+      <p>Encuentra proveedores verificados que trabajan con estándares sostenibles.</p>
+    </div>
+  </div>
+
+</div>
 {% endblock %}
