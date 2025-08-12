@@ -1,100 +1,193 @@
 # Code Review for forms.py
 
-This Django code defines a form, `TransaccionForm`, based on the Django model `Transaccion`. Let's break down each part:
+```python
+from django import forms
+
+from .models import Item
+
+INPUT_CLASSES = 'w-full py-4 px-6 rounded-xl border'
+
+class NewItemForm(forms.ModelForm):
+    class Meta:
+        model  = Item
+        fields = ('category','name','price','description','image',)
+    
+        widgets = {
+            'category' : forms.Select(attrs={
+                'class' : INPUT_CLASSES
+            }),
+            'name' : forms.TextInput(attrs={
+                'class' : INPUT_CLASSES
+            }),
+            'description' : forms.Textarea(attrs={
+                'class' : INPUT_CLASSES
+            }),
+            'price' : forms.TextInput(attrs={
+                'class' : INPUT_CLASSES
+            }),
+            'category' : forms.Select(attrs={
+                'class' : INPUT_CLASSES
+            }),
+            'image' : forms.FileInput(attrs={
+                'class' : INPUT_CLASSES
+            }),
+        }
+
+
+
+class EditItemForm(forms.ModelForm):
+    class Meta:
+        model  = Item
+        fields = ('name','price','description','image','is_sold')
+    
+        widgets = {
+
+            'name' : forms.TextInput(attrs={
+                'class' : INPUT_CLASSES
+            }),
+            'description' : forms.Textarea(attrs={
+                'class' : INPUT_CLASSES
+            }),
+            'price' : forms.TextInput(attrs={
+                'class' : INPUT_CLASSES
+            }),
+            'category' : forms.Select(attrs={
+                'class' : INPUT_CLASSES
+            }),
+            'image' : forms.FileInput(attrs={
+                'class' : INPUT_CLASSES
+            },
+            'is_sold' : forms.CheckboxInput(attrs={
+                'class' : 'ml-2' # You might need a different class for checkboxes
+            })
+        }
+```
+
+**Explanation:**
+
+This code defines two Django forms, `NewItemForm` and `EditItemForm`, which are used to create and edit `Item` objects in a Django application.  Let's break down each part:
 
 **1. Imports:**
 
 ```python
 from django import forms
-from .models import Transaccion
+from .models import Item
 ```
 
-*   `from django import forms`: Imports the necessary `forms` module from Django to create forms.
-*   `from .models import Transaccion`: Imports the `Transaccion` model from the current app's `models.py` file.  This means you have a Django model named `Transaccion` that defines the database structure for your transactions.
+*   `from django import forms`: Imports the `forms` module from Django, which provides classes and utilities for creating forms.
+*   `from .models import Item`: Imports the `Item` model from the `models.py` file in the *current* directory (indicated by the `.`). This assumes you have a `models.py` file defining your `Item` model.
 
-**2. `TransaccionForm` Definition:**
+**2. `INPUT_CLASSES` Constant:**
 
 ```python
-class TransaccionForm(forms.ModelForm):
+INPUT_CLASSES = 'w-full py-4 px-6 rounded-xl border'
+```
+
+*   This defines a string constant `INPUT_CLASSES`.  This string likely contains CSS classes that will be applied to the form input fields to style them.  Based on the class names (e.g., `w-full`, `py-4`, `px-6`), it appears these classes are intended for use with a CSS framework like Tailwind CSS, providing full-width, padding, rounded corners, and a border to the form inputs.
+
+**3. `NewItemForm`:**
+
+```python
+class NewItemForm(forms.ModelForm):
     class Meta:
-        model = Transaccion
-        fields = '__all__'
-        exclude = ['monto','estado','pais','moneda']
-        widgets= {
-            'moneda':forms.Select(choices=[('COP','COP'),('USD','USD')]),
-            'PAN_1': forms.TextInput(attrs={'maxlength': '4', 'placeholder': 'XXXX'}),
-            'PAN_2': forms.TextInput(attrs={'maxlength': '4', 'placeholder': 'XXXX'}),
-            'PAN_3': forms.TextInput(attrs={'maxlength': '4', 'placeholder': 'XXXX'}),
-            'PAN_4': forms.TextInput(attrs={'maxlength': '4', 'placeholder': 'XXXX'}),
-            'CVS': forms.TextInput(attrs={'maxlength': '3', 'placeholder': '123'}),
-            'EXP_M': forms.TextInput(attrs={'maxlength': '2','placeholder': '01'}),
-            'EXP_Y': forms.TextInput(attrs={'maxlength': '2','placeholder': '25'}),
+        model  = Item
+        fields = ('category','name','price','description','image',)
+    
+        widgets = {
+            'category' : forms.Select(attrs={
+                'class' : INPUT_CLASSES
+            }),
+            'name' : forms.TextInput(attrs={
+                'class' : INPUT_CLASSES
+            }),
+            'description' : forms.Textarea(attrs={
+                'class' : INPUT_CLASSES
+            }),
+            'price' : forms.TextInput(attrs={
+                'class' : INPUT_CLASSES
+            }),
+            'category' : forms.Select(attrs={
+                'class' : INPUT_CLASSES
+            }),
+            'image' : forms.FileInput(attrs={
+                'class' : INPUT_CLASSES
+            }),
         }
 ```
 
-*   `class TransaccionForm(forms.ModelForm):`: Defines a form named `TransaccionForm` that inherits from `forms.ModelForm`. This is the key to automatically creating a form from a Django model.
+*   `class NewItemForm(forms.ModelForm):`:  Creates a form class called `NewItemForm` that inherits from `forms.ModelForm`.  `ModelForm`s are a convenient way to create forms directly from Django models.
 
-*   `class Meta:`:  This is an inner class that provides metadata about the form.
+*   `class Meta:`: Defines metadata for the form.
 
-    *   `model = Transaccion`:  Specifies that this form is based on the `Transaccion` model. Django will automatically generate form fields corresponding to the fields in your `Transaccion` model.
+    *   `model = Item`: Specifies that this form is associated with the `Item` model.  Django will automatically generate fields for the form based on the model's fields.
+    *   `fields = ('category', 'name', 'price', 'description', 'image',)`: Specifies which fields from the `Item` model should be included in the form. Only these fields will be displayed in the form.  The trailing comma is important to make this a tuple.
 
-    *   `fields = '__all__'`: This tells Django to include *all* fields from the `Transaccion` model in the form.  (Note that `exclude` overrides this for certain fields.)
+*   `widgets = { ... }`: This dictionary allows you to customize the HTML widget used for each field.
 
-    *   `exclude = ['monto','estado','pais','moneda']`:  This excludes the specified fields from the generated form. So, even though `fields = '__all__'`, these fields (`monto`, `estado`, `pais`, and `moneda`) will *not* be displayed in the form. This is useful if you want to handle these fields in a different way (e.g., calculate them automatically, set them in the view, etc.).
+    *   `'category': forms.Select(attrs={'class': INPUT_CLASSES})`:  Uses a `Select` widget (a dropdown list) for the `category` field.  It sets the `class` attribute of the `<select>` HTML element to the value of `INPUT_CLASSES` (applying the styling).
 
-    *   `widgets = { ... }`: This allows you to customize the HTML widgets used for specific form fields.  Here's a breakdown:
+    *   `'name': forms.TextInput(attrs={'class': INPUT_CLASSES})`: Uses a `TextInput` widget (a standard text input box) for the `name` field.  Applies the `INPUT_CLASSES` for styling.
 
-        *   `'moneda':forms.Select(choices=[('COP','COP'),('USD','USD')])`:  Overrides the default widget for the `moneda` field (likely a CharField in the model) with a `Select` widget (a dropdown).  The `choices` argument provides the options for the dropdown: Colombian Pesos (COP) and US Dollars (USD).
-        *   `'PAN_1': forms.TextInput(attrs={'maxlength': '4', 'placeholder': 'XXXX'}),`
-        *   `'PAN_2': forms.TextInput(attrs={'maxlength': '4', 'placeholder': 'XXXX'}),`
-        *   `'PAN_3': forms.TextInput(attrs={'maxlength': '4', 'placeholder': 'XXXX'}),`
-        *   `'PAN_4': forms.TextInput(attrs={'maxlength': '4', 'placeholder': 'XXXX'}),`:
-            These lines customize the widgets for `PAN_1`, `PAN_2`, `PAN_3`, and `PAN_4` fields. It creates `TextInput` widgets for each of them.  `attrs={'maxlength': '4', 'placeholder': 'XXXX'}` adds HTML attributes to these text inputs:
-            *   `maxlength='4'`:  Limits the input to 4 characters.
-            *   `placeholder='XXXX'`:  Adds a placeholder text "XXXX" inside the input field when it's empty, providing a visual hint to the user. It suggests that these four fields together make the PAN.
+    *   `'description': forms.Textarea(attrs={'class': INPUT_CLASSES})`:  Uses a `Textarea` widget (a multi-line text input box) for the `description` field. Applies the `INPUT_CLASSES` styling.
 
-        *   `'CVS': forms.TextInput(attrs={'maxlength': '3', 'placeholder': '123'}),`: Customizes the widget for the `CVS` field (likely representing the card verification value/code). It creates a `TextInput` widget with `maxlength='3'` and `placeholder='123'`.
+    *   `'price': forms.TextInput(attrs={'class': INPUT_CLASSES})`:  Uses a `TextInput` widget for the `price` field.  You might want to use `forms.DecimalField` or `forms.FloatField` in the model and then in the form, potentially specifying a `NumberInput` widget.
 
-        *  `'EXP_M': forms.TextInput(attrs={'maxlength': '2','placeholder': '01'}),`
-        *   `'EXP_Y': forms.TextInput(attrs={'maxlength': '2','placeholder': '25'}),`:
-            These lines customize the widgets for `EXP_M` and `EXP_Y` fields.  They create `TextInput` widgets with `maxlength='2'` and placeholders "01" and "25" respectively.  These likely represent the expiration month and year of the card.
+    *   `'category': forms.Select(attrs={'class': INPUT_CLASSES})`:  This line appears to be a duplicate of the first line in the `widgets` dictionary. This could cause errors or unexpected behavior.
 
-**3. Custom Validation Methods:**
+    *   `'image': forms.FileInput(attrs={'class': INPUT_CLASSES})`:  Uses a `FileInput` widget, which renders an HTML `<input type="file">` element, allowing the user to upload an image file.  Applies the `INPUT_CLASSES` styling.
+
+**4. `EditItemForm`:**
 
 ```python
-    def clean_ultimos_4_digitos(self):
-        data = self.cleaned_data['ultimos_4_digitos']
-        if not data.isdigit() or len(data) != 4:
-            raise forms.ValidationError("Debe ingresar solo los ultimos 4 Digitos de la tarjeta")
-        return data
+class EditItemForm(forms.ModelForm):
+    class Meta:
+        model  = Item
+        fields = ('name','price','description','image','is_sold')
+    
+        widgets = {
 
-
-    def clean_monto(self):
-        monto = self.cleaned_data['monto']
-        #if monto <= 0:
-        #   raise forms.ValidationError('El monto debe ser mayor a 0')
-        return monto
+            'name' : forms.TextInput(attrs={
+                'class' : INPUT_CLASSES
+            }),
+            'description' : forms.Textarea(attrs={
+                'class' : INPUT_CLASSES
+            }),
+            'price' : forms.TextInput(attrs={
+                'class' : INPUT_CLASSES
+            }),
+            'category' : forms.Select(attrs={
+                'class' : INPUT_CLASSES
+            }),
+            'image' : forms.FileInput(attrs={
+                'class' : INPUT_CLASSES
+            },
+            'is_sold' : forms.CheckboxInput(attrs={
+                'class' : 'ml-2' # You might need a different class for checkboxes
+            })
+        }
 ```
 
-*   **`clean_ultimos_4_digitos(self)`:** This is a custom validation method specifically for a field named `ultimos_4_digitos`.  Django automatically calls this method during form validation if a field named `ultimos_4_digitos` exists.
-    *   `data = self.cleaned_data['ultimos_4_digitos']`:  Retrieves the value entered by the user for the `ultimos_4_digitos` field.  `self.cleaned_data` is a dictionary containing the validated data.
-    *   `if not data.isdigit() or len(data) != 4:`: Checks if the entered data consists only of digits (`isdigit()`) and if its length is exactly 4 characters.
-    *   `raise forms.ValidationError("Debe ingresar solo los ultimos 4 Digitos de la tarjeta")`: If the validation fails, it raises a `ValidationError` with a custom error message.
-    *   `return data`: If the validation passes, it returns the validated data.
+*   `class EditItemForm(forms.ModelForm):`:  Creates a form class called `EditItemForm` that inherits from `forms.ModelForm`.  This form is designed for *editing* existing `Item` objects.
 
-*   **`clean_monto(self)`:**  This is a custom validation method for the `monto` field. It's important to note that this `clean_monto` function is currently doing almost nothing. It gets the `monto` from the cleaned data and returns it.
+*   `class Meta:`: Defines metadata for the form.
 
-    * The commented-out code `#if monto <= 0:` is where the validation would likely be performed to ensure that the monto is positive.  The fact that it's commented out means that the form currently accepts zero or negative values for `monto`.
+    *   `model = Item`:  Specifies that this form is associated with the `Item` model.
+    *   `fields = ('name', 'price', 'description', 'image', 'is_sold')`:  Specifies the fields from the `Item` model that should be included in the form for editing.  Notice that `category` is missing here, and `is_sold` is added.
+
+*   `widgets = { ... }`: Customizes the HTML widgets for each field.
+
+    *   `'name': forms.TextInput(attrs={'class': INPUT_CLASSES})`:  Uses a `TextInput` widget for the `name` field, applying the `INPUT_CLASSES` styling.
+
+    *   `'description': forms.Textarea(attrs={'class': INPUT_CLASSES})`: Uses a `Textarea` widget for the `description` field, applying the `INPUT_CLASSES` styling.
+
+    *   `'price': forms.TextInput(attrs={'class': INPUT_CLASSES})`: Uses a `TextInput` widget for the `price` field, applying the `INPUT_CLASSES` styling.
+
+    *   `'category' : forms.Select(attrs={'class' : INPUT_CLASSES})`: Includes category again, but it's *likely* a mistake since it isn't in the `fields` list. It won't be rendered anyway.
+
+    *   `'image': forms.FileInput(attrs={'class': INPUT_CLASSES})`:  Uses a `FileInput` widget for the `image` field, allowing the user to update the image. Applies `INPUT_CLASSES`.
+
+    *   `'is_sold': forms.CheckboxInput(attrs={'class': 'ml-2'})`:  Uses a `CheckboxInput` widget for the `is_sold` field (a boolean field), which renders a checkbox.  It applies a different CSS class (`ml-2`), likely for specific styling of the checkbox.
 
 **In Summary:**
 
-This code defines a Django form for creating or updating `Transaccion` objects in your database.  It does the following:
-
-1.  **Bases itself on the `Transaccion` model.**
-2.  **Includes all fields except `monto`, `estado`, `pais`, and `moneda`.** These will likely be set programmatically in the view handling the form.
-3.  **Customizes the `moneda` field with a dropdown (Select) with COP and USD options.**
-4.  **Customizes the input fields related to a credit/debit card (PAN_1, PAN_2, PAN_3, PAN_4, CVS, EXP_M, EXP_Y) to enforce specific length constraints and provide helpful placeholders.**
-5.  **Validates that the `ultimos_4_digitos` field contains exactly 4 digits.**
-6.  **Has a `clean_monto` function but it is commented out so it accepts zero or negative numbers.**
-
-This form would be used in a Django view to display a web form to the user, collect transaction data, validate that data, and then create a new `Transaccion` object in the database.  The custom widgets and validation help ensure that the user enters data in the correct format.
+This code defines two Django forms, one for creating new `Item` objects (`NewItemForm`) and another for editing existing `Item` objects (`EditItemForm`).  The forms are based on the `Item` model and specify the fields to be included and the HTML widgets to be used for each field.  CSS classes are applied to the form inputs for styling.  The forms can be used in Django views to render HTML forms that allow users to create and edit item data, which can then be saved to the database. The `INPUT_CLASSES` variable and the specific HTML widgets used indicate that the developer is likely using a CSS framework (like Tailwind CSS) to style the forms.

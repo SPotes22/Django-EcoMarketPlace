@@ -10,3 +10,5 @@ env
 */*.cpython-311.pyc
 */*/*.cpython-311.pyc
 ~/*.cpython-311.pyc
+AutoCommit.py
+
